@@ -1,6 +1,6 @@
 # negative-keyword-miner
 
-The user downloads the search terms report data into a CSV file and uploads it into Claude.
+The user downloads the search terms report data into a CSV file and uploads it to Claude.
 
 The search terms report data includes campaign, ad group, triggering keyword, match type, clicks, spend, conversions, conversion value, and the date range. A strong prompt asks for product fit, buyer fit, funnel stage, and evidence from the row. If any data type is missing, tell the user; if the user asks to ignore it, proceed.
 
@@ -8,7 +8,7 @@ The model needs a clear description of what the company sells, who can buy, excl
 
 The output is a proposed list with the negative keyword, score, reason, negative keyword match type, scope, and supporting metrics (i.e., clicks, spend, conversions, conversion value).
 
-Use a simple score and a written reason. The number prioritizes review. The explanation lets the operator challenge the model. Use “uncertain” when the account context does not support a confident decision.
+Use a simple score and a written reason. The number prioritizes review. The explanation lets the operator challenge the model. Use “uncertain” when the account context does not support a confident decision. The score measures how good a fit the query is, so low scores are the negative candidates.
 
 Score: 0-2; Classification: clearly irrelevant; Recommendation: Review for broad or phrase negative.
 Score: 3-4; Classification: likely wrong buyer or intent; Recommendation: Review context and triggering keyword.
@@ -36,3 +36,9 @@ Conversion and qualified conversion history
 Product and buyer relevance
 Match type and triggering keyword
 Campaign, ad group, geography, and landing page
+
+
+Each proposed negative is tested against every query in the report, and it's dropped or narrowed if it would block a converting query, a query scoring 7 or higher, or a brand term.
+Your own brand terms are never proposed as negatives.
+After you approve items, it can generate a Google Ads Editor import CSV. Nothing is ever applied to a live account.
+
