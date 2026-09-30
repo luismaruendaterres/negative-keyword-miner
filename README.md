@@ -1,5 +1,21 @@
 # negative-keyword-miner
 
+**What's Inside**
+
+SKILL.md is the skill.
+
+scripts/load_report.py (import) cleans your uploaded CSV. It finds the real header, drops totals rows, and handles UTF-16, tab and semicolon files. It writes a cleaned file, an aggregated file (one row per term, campaign and ad group, sorted by cost) and a data check listing any missing fields and what each one weakens.
+
+scripts/check_proposal.py (check) tests each proposed negative against the real report, using its match type and scope. It recalculates the supporting metrics from your data and flags problems: blocking a converting query, brand terms, matching nothing in scope, or possibly already covered by an existing negative.
+
+scripts/export_editor.py (export) turns approved items into editor_import.csv for Google Ads Editor, plus shared_and_account.txt and shared_and_account.csv for shared-list and account-level terms. It also writes a report of anything skipped and why.
+
+scripts/nk_common.py holds the shared helpers, and examples/sample_search_terms.csv is a small fictional report for trying things out.
+
+
+
+**How It Works**
+
 The user downloads the search terms report data into a CSV file and uploads it to Claude.
 
 The search terms report data includes campaign, ad group, triggering keyword, match type, clicks, spend, conversions, conversion value, and the date range. A strong prompt asks for product fit, buyer fit, funnel stage, and evidence from the row. If any data type is missing, tell the user; if the user asks to ignore it, proceed.
